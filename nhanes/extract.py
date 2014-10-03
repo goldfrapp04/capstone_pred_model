@@ -35,8 +35,8 @@ def is_field_valid(field, value):
 	if field.startswith('RI') or field == 'RXDCOUNT':	# Demographic and Prescription
 		if value > 0:
 			return True
-	if field == 'SMQ040' or field == 'DIQ010':	# Smoking and Diabetes
-		if value > 0 and value <= 3:
+	if field == 'SMQ040' or field == 'DIQ010' or field == 'OHDEXSTS' or field == 'WHQ030':	# Smoking, Diabetes, Oral health dentition, Weight history 
+		if value >= 1 and value <= 3:
 			return True
 	if field == 'DPQ020':	# Depression
 		if value >= 0 and value <= 3:
@@ -44,8 +44,10 @@ def is_field_valid(field, value):
 	if field == 'HUQ050':	# Hospital utilization
 		if value >= 0 and value <= 5:
 			return True
+	if field == 'OHQ030':
+		if value >= 1 and value <= 7:	# Oral health
+			return True
 	return False
 
 if __name__ == "__main__":
 	extract(sys.argv[1], sys.argv[2], ['SEQN', 'MCQ160B', 'MCQ053', 'MCQ080', 'MCQ160C', 'MCQ220'])
-	

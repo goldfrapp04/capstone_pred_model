@@ -8,6 +8,10 @@ def make_dir_path(dir_path):
 	return dir_path
 
 if __name__ == "__main__":
+	if len(sys.argv) != 4:
+		print 'Usage: all.py XPT_DIR_PATH INTERIM_CSV_DIR_PATH FINAL_CSV_FILE_PATH'
+		sys.exit(1)
+
 	XPT_DIR_PATH = make_dir_path(sys.argv[1])
 	INTERIM_CSV_DIR_PATH = make_dir_path(sys.argv[2])
 	FINAL_CSV_FILE_PATH = make_dir_path(sys.argv[3])
@@ -19,8 +23,11 @@ if __name__ == "__main__":
 		'DIQ':		['SEQN', 'DIQ010'],
 		'DPQ':		['SEQN', 'DPQ020'],
 		'HUQ':		['SEQN', 'HUQ050'],
+		'OHQ':		['SEQN', 'OHQ030'],
+		'OHXDEN':	['SEQN', 'OHDEXSTS'],
 		'RXQ_RX':	['SEQN', 'RXDCOUNT'],
-		'SMQ':		['SEQN', 'SMQ040']
+		'SMQ':		['SEQN', 'SMQ040'],
+		'WHQ':		['SEQN', 'WHQ030']
 	}
 	years = ['G']
 
