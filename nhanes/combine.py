@@ -1,7 +1,7 @@
 import csv
 import sys
 
-def combine_fields(output_dir_path, csv_file_paths):
+def combine_fields(output_csv_path, csv_file_paths):
 	readers = []
 	for csv_file_path in csv_file_paths:
 		readers.append(csv.DictReader(open(csv_file_path, 'rb')))
@@ -20,7 +20,7 @@ def combine_fields(output_dir_path, csv_file_paths):
 			for key, value in in_row.iteritems():
 				out_rows[in_row['SEQN']][key] = value
 
-	with open(output_dir_path + 'combined.csv', 'wb') as out:
+	with open(output_csv_path, 'wb') as out:
 		writer = csv.DictWriter(out, fields)
 		writer.writeheader()
 
@@ -29,9 +29,9 @@ def combine_fields(output_dir_path, csv_file_paths):
 				writer.writerow(out_row)
 
 def has_all_fields(row, fields):
-	for field in fields:
-		if field not in row:
-			return False
+	# for field in fields:
+	# 	if field not in row:
+	# 		return False
 	return True
 
 def combine_years():

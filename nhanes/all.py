@@ -14,12 +14,12 @@ if __name__ == "__main__":
 
 	XPT_DIR_PATH = make_dir_path(sys.argv[1])
 	INTERIM_CSV_DIR_PATH = make_dir_path(sys.argv[2])
-	FINAL_CSV_FILE_PATH = make_dir_path(sys.argv[3])
+	FINAL_CSV_DIR_PATH = make_dir_path(sys.argv[3])
 
 	files_fields = {
 		'MCQ':		['SEQN', 'MCQ160B', 'MCQ053', 'MCQ080', 'MCQ160C', 'MCQ220'],
 		'BPQ':		['SEQN', 'BPQ020'],
-		'DEMO':		['SEQN', 'RIAGENDR', 'RIDAGEYR', 'RIDRETH3'],
+		'DEMO':		['SEQN', 'DMDEDUC2', 'RIAGENDR', 'RIDAGEYR', 'RIDRETH3'],
 		'DIQ':		['SEQN', 'DIQ010'],
 		'DPQ':		['SEQN', 'DPQ020'],
 		'HUQ':		['SEQN', 'HUQ050'],
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 	csv_file_paths = []
 	for file_name, fields in files_fields.iteritems():
-		extract.extract(INTERIM_CSV_DIR_PATH, XPT_DIR_PATH + file_name + '_' + years[0] + '.XPT', fields)
-		csv_file_paths.append(INTERIM_CSV_DIR_PATH + file_name + "_" + years[0] + '.csv')
-
-	combine.combine_fields(FINAL_CSV_FILE_PATH, csv_file_paths)
+		for year in years:
+			extract.extract(INTERIM_CSV_DIR_PATH, XPT_DIR_PATH + file_name + '_' + year + '.XPT', fields)
+			csv_file_paths.append(INTERIM_CSV_DIR_PATH + file_name + "_" + year + '.csv')
+			combine.combine_fields(FINAL_CSV_DIR_PATH + 'combined_' + year + '.csv', csv_file_paths)
