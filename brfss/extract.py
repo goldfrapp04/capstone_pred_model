@@ -29,6 +29,7 @@ if __name__ == "__main__":
 
 	# Variable name: [Starting column, Field length]
 	fields = {
+
 		# Merging variables
 		'_AGE80':	[2364,	2],
 		'SEX':		[178, 	1],
@@ -42,11 +43,12 @@ if __name__ == "__main__":
 		'CHCOCNCR':	[104,	1],
 		'MENTHLTH':	[83,	2],
 
-		# BRFSS behavioral variables
-		# 'BPHIGH4':	[93,	1],
-		# 'GENHLTH':	[80,	1],
-		# 'PHYSHLTH':	[81,	2],
-		# 'EMPLOY1':	[151,	1],
-		# 'EXERANY2':	[220,	1],
+		# BRFSS unique variables
+		'SEQNO':	[35,	10],
+		'BPHIGH4':	[93,	1],
+		'GENHLTH':	[80,	1],
+		'PHYSHLTH':	[81,	2],
+		'EMPLOY1':	[151,	1],
+		'EXERANY2':	[220,	1],
 	}
 	extract(make_dir_path(sys.argv[1]), sys.argv[2], fields)

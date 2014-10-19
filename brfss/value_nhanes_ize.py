@@ -3,6 +3,15 @@ import sys
 
 # extract VETERAN3=1 only
 def value_nhanes_ize(output_dir_path, input_file_path):
+	brfss_unique_fields = {
+		'SEQNO':	[35,	10],
+		'BPHIGH4':	[93,	1],
+		'GENHLTH':	[80,	1],
+		'PHYSHLTH':	[81,	2],
+		'EMPLOY1':	[151,	1],
+		'EXERANY2':	[220,	1]
+	}
+
 	with open(input_file_path, 'rb') as in_asc:
 		reader = csv.DictReader(in_asc)
 		with open(output_dir_path + 'extracted_nhanes_ized.csv', 'wb') as out:
@@ -20,10 +29,16 @@ def value_nhanes_ize(output_dir_path, input_file_path):
 			for in_row in reader:
 				out_row = {}
 
+				# Variables unique to BRFSS
+				for field in brfss_unique_fields.keys():
+					out_row[field] = in_row[field]
+
+				# Variables shared with NHANES and need no processing
 				out_row['_AGE80'] = in_row['_AGE80']
 				out_row['SEX'] = in_row['SEX']
 				out_row['CVDCRHD4'] = in_row['CVDCRHD4']
 
+				# Variables shared with NHANES and need processing
 				# _RACE_G1
 				try:
 					race = int(in_row['_RACE_G1'])
