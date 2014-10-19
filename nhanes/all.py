@@ -1,20 +1,17 @@
 import combine
 import extract
 import sys
-
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
+sys.path.append('../')
+import util
 
 if __name__ == "__main__":
 	if len(sys.argv) != 4:
 		print 'Usage: all.py XPT_DIR_PATH INTERIM_CSV_DIR_PATH FINAL_CSV_FILE_PATH'
 		sys.exit(1)
 
-	XPT_DIR_PATH = make_dir_path(sys.argv[1])
-	INTERIM_CSV_DIR_PATH = make_dir_path(sys.argv[2])
-	FINAL_CSV_DIR_PATH = make_dir_path(sys.argv[3])
+	XPT_DIR_PATH = util.make_dir_path(sys.argv[1])
+	INTERIM_CSV_DIR_PATH = util.make_dir_path(sys.argv[2])
+	FINAL_CSV_DIR_PATH = util.make_dir_path(sys.argv[3])
 
 	files_fields = {
 		'MCQ':		['SEQN', 'MCQ160B', 'MCQ053', 'MCQ080', 'MCQ160C', 'MCQ220'],

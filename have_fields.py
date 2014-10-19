@@ -1,5 +1,6 @@
 import csv
 import sys
+import util
 sys.path.append('/xport/')
 import xport
 
@@ -32,19 +33,8 @@ def has_field(xpt_file_name, field_name):
 				return True
 		return False
 
-# def has_fields(xpt_file_name, fields_names):
-# 	for field_name in fields_names:
-# 		if has_field(xpt_file_name, field_name) == False:
-# 			return False
-# 	return True
-
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
-
 if __name__ == "__main__":
-	XPT_DIR_PATH = make_dir_path(sys.argv[2])
+	XPT_DIR_PATH = util.make_dir_path(sys.argv[2])
 
 	files_fields = {
 		'MCQ':		['SEQN', 'MCQ160B', 'MCQ053', 'MCQ080', 'MCQ160C', 'MCQ220'],

@@ -2,11 +2,8 @@ import csv
 import random
 import re
 import sys
-
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
+sys.path.append('../')
+import util
 
 def calculate(field, in_row):
 	for key, value in in_row.iteritems():
@@ -80,4 +77,4 @@ def value_nhanes_ize(output_dir_path, input_file_path):
 			print num_invalid_rows
 
 if __name__ == "__main__":
-	value_nhanes_ize(make_dir_path(sys.argv[1]), sys.argv[2])
+	value_nhanes_ize(util.make_dir_path(sys.argv[1]), sys.argv[2])

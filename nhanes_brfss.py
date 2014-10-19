@@ -2,6 +2,7 @@ import csv
 import random
 import sys
 import time
+import util
 
 class FieldWeight:
 	def __init__(self, field_n, field_b, weight, upperbound = None):
@@ -39,11 +40,6 @@ def calculate_score(row_n, row_b, FIELDS_CATEGORICAL, FIELDS_NUMERICAL):
 
 	return score
 
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
-
 # Args: output_dir_path nhanes_file_path brfss_file_path
 if __name__ == "__main__":
 
@@ -76,7 +72,7 @@ if __name__ == "__main__":
 
 	# Find match for each row in NHANES
 	with open(sys.argv[2], 'rb') as in_nhanes:
-		with open(make_dir_path(sys.argv[1]) + 'nhanes_brfss_match.csv', 'wb') as out:
+		with open(util.make_dir_path(sys.argv[1]) + 'nhanes_brfss_match.csv', 'wb') as out:
 			reader_n = csv.DictReader(in_nhanes)
 			fields_out.extend(reader_n.fieldnames)
 			writer = csv.DictWriter(out, fields_out)

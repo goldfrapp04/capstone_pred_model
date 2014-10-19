@@ -1,5 +1,7 @@
 import csv
 import sys
+sys.path.append('../')
+import util
 
 # extract VETERAN3=1 only
 def value_nhanes_ize(output_dir_path, input_file_path):
@@ -110,12 +112,6 @@ def value_nhanes_ize(output_dir_path, input_file_path):
 					out_row['MENTHLTH'] = 99
 
 				writer.writerow(out_row)
-					
-
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
 
 if __name__ == "__main__":
-	value_nhanes_ize(make_dir_path(sys.argv[1]), sys.argv[2])
+	value_nhanes_ize(util.make_dir_path(sys.argv[1]), sys.argv[2])

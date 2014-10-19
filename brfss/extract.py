@@ -1,5 +1,7 @@
 import csv
 import sys
+sys.path.append('../')
+import util
 
 # extract VETERAN3=1 only
 def extract(output_dir_path, input_file_path, fields):
@@ -19,11 +21,6 @@ def extract(output_dir_path, input_file_path, fields):
 						# BRFSS columns start at 1, so minus 1
 						out_row[field] = line[(starting_column - 1) : (starting_column - 1 + field_length)]
 					writer.writerow(out_row)
-
-def make_dir_path(dir_path):
-	if not dir_path.endswith('/'):
-		return dir_path + '/'
-	return dir_path
 
 if __name__ == "__main__":
 
@@ -51,4 +48,4 @@ if __name__ == "__main__":
 		'EMPLOY1':	[151,	1],
 		'EXERANY2':	[220,	1],
 	}
-	extract(make_dir_path(sys.argv[1]), sys.argv[2], fields)
+	extract(util.make_dir_path(sys.argv[1]), sys.argv[2], fields)
