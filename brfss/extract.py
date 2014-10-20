@@ -1,7 +1,5 @@
 import csv
 import sys
-sys.path.append('../')
-import util
 
 # extract VETERAN3=1 only
 def extract(output_dir_path, input_file_path, fields):
@@ -22,6 +20,11 @@ def extract(output_dir_path, input_file_path, fields):
 						out_row[field] = line[(starting_column - 1) : (starting_column - 1 + field_length)]
 					writer.writerow(out_row)
 
+def make_dir_path(dir_path):
+	if not dir_path.endswith('/'):
+		return dir_path + '/'
+	return dir_path
+
 if __name__ == "__main__":
 
 	# Variable name: [Starting column, Field length]
@@ -41,11 +44,21 @@ if __name__ == "__main__":
 		'MENTHLTH':	[83,	2],
 
 		# BRFSS unique variables
-		'SEQNO':	[35,	10],
-		'BPHIGH4':	[93,	1],
 		'GENHLTH':	[80,	1],
 		'PHYSHLTH':	[81,	2],
 		'EMPLOY1':	[151,	1],
 		'EXERANY2':	[220,	1],
+		'ADDEPEV2':	[107,	1],
+		'TOLDHI2':	[97,	1],
+		'CVDSTRK3':	[100,	1],
+		'ASTHMA3':	[101,	1],
+		'CHCCOPD1':	[105,	1],
+		'MARITAL':	[147,	1],
+		'RENTHOM1':	[177,	1],
+		'MAXDRNKS':	[200,	2],
+		'FRUIT1':	[205,	3],
+		'FVGREEN':	[211,	3],
+		'WTCHSALT':	[352,	1],
+		'EMTSUPRT':	[532,	1]
 	}
-	extract(util.make_dir_path(sys.argv[1]), sys.argv[2], fields)
+	extract(make_dir_path(sys.argv[1]), sys.argv[2], fields)
