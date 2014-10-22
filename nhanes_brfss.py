@@ -40,7 +40,7 @@ if __name__ == "__main__":
 		# Categorical
 		FieldWeight('RIAGENDR',	'SEX',		.3), 
 		FieldWeight('RIDRETH1',	'_RACE_G1',	.2),
-		# FieldWeight('SMQ020', 	'SMOKE100',	.025),
+		FieldWeight('SMQ020', 	'SMOKE100',	.025),
 		FieldWeight('DIQ010',	'DIABETE3',	.05),
 		FieldWeight('MCQ160C',	'CVDCRHD4',	.05),
 		FieldWeight('MCQ220',	'CHCCNCR',	.05),
@@ -49,9 +49,9 @@ if __name__ == "__main__":
 		FieldWeight('RIDAGEYR',	'_AGE80',	.2,		99),
 		FieldWeight('DMDEDUC2',	'EDUCA',	.05,	5),
 		FieldWeight('SMQ040',	'SMOKDAY2', .025,	3),
-		# FieldWeight('HSQ480',	'MENTHLTH',	.05,	30)
+		FieldWeight('HSQ480',	'MENTHLTH',	.05,	30)
 	]
-	index_last_categorical = 4	# NEED TO BE CHANGED
+	index_last_categorical = 5	# NEED TO BE CHANGED
 	fields_out = ['SCORE']
 	fields_out_b = []
 	start_time = time.clock()

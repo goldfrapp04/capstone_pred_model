@@ -109,15 +109,16 @@ def value_nhanes_ize(output_dir_path, input_file_path):
 				else:
 					out_row['CHCCNCR'] = 2
 
-				# MENTHLTH
-				try:
-					mental_health = int(in_row['MENTHLTH'])
-					if mental_health == 88:
-						out_row['MENTHLTH'] = 0
-					else:
-						out_row['MENTHLTH'] = mental_health
-				except ValueError:
-					out_row['MENTHLTH'] = 99
+				# MENTHLTH, PHYSHLTH
+				for field in ['MENTHLTH', 'PHYSHLTH']:
+					try:
+						health = int(in_row[field])
+						if health == 88:
+							out_row[field] = 0
+						else:
+							out_row[field] = health
+					except ValueError:
+						out_row[field] = 99
 
 				writer.writerow(out_row)
 
