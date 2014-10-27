@@ -52,7 +52,7 @@ if __name__ == "__main__":
 		FieldWeight('HSQ480',	'MENTHLTH',	.05,	30)
 	]
 	index_last_categorical = 5	# NEED TO BE CHANGED
-	fields_out = ['SCORE']
+	fields_out = ['NHANES_BRFSS_SCORE']
 	fields_out_b = []
 	start_time = time.clock()
 
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 			writer = csv.DictWriter(out, fields_out)
 			writer.writeheader()
 
-			for index, row_n in enumerate(reader_n):
+			for row_n in reader_n:
 				highest_score = 0
 				highest_score_row_b = {}
 				index_to_delete_b = len(rows_brfss)
@@ -94,7 +94,7 @@ if __name__ == "__main__":
 				if highest_score > 0:
 					for field_b in fields_out_b:
 						row_n[field_b] = rows_brfss[index_to_delete_b][field_b]
-					row_n['SCORE'] = highest_score
+					row_n['NHANES_BRFSS_SCORE'] = highest_score
 					writer.writerow(row_n)
 				else:
 					print 'No match found'
