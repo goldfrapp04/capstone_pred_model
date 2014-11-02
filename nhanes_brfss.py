@@ -8,11 +8,12 @@ import util
 
 def calculate_score(row_n, row_b, FIELDS_WEIGHTS, index_last_categorical):
 	score = 0
+	weight = 1.0 / len(FIELDS_WEIGHTS)	# unweighted
 
 	for field_weight in FIELDS_WEIGHTS[ : (index_last_categorical + 1)]:
 		field_n = field_weight.field_n
 		field_b = field_weight.field_b
-		weight = field_weight.weight
+#		weight = field_weight.weight    # weighted
 		if row_n[field_n] == row_b[field_b]:
 			score += weight
 	
@@ -52,7 +53,8 @@ if __name__ == "__main__":
 		FieldWeight('HSQ480',	'MENTHLTH',	.05,	30)
 	]
 	index_last_categorical = 5	# NEED TO BE CHANGED
-	fields_out = ['NHANES_BRFSS_SCORE']
+	# fields_out = ['NHANES_BRFSS_SCORE']	# Write score into output
+	fields_out = []
 	fields_out_b = []
 	start_time = time.clock()
 
@@ -93,8 +95,16 @@ if __name__ == "__main__":
 
 				if highest_score > 0:
 					for field_b in fields_out_b:
-						row_n[field_b] = rows_brfss[index_to_delete_b][field_b]
-					row_n['NHANES_BRFSS_SCORE'] = highest_score
+						try:
+							row_n[field_b] = int(rows_brfss[index_to_delete_b][field_b])
+						except ValueError:
+							row_n[field_b] = 0
+
+						# if rows_brfss[index_to_delete_b][field_b] == ' ':
+						# 	row_n[field_b] = 0
+						# else:
+						# 	row_n[field_b] = rows_brfss[index_to_delete_b][field_b]
+					# row_n['NHANES_BRFSS_SCORE'] = highest_score 	# Write score into output
 					writer.writerow(row_n)
 				else:
 					print 'No match found'

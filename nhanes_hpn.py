@@ -8,11 +8,12 @@ import util
 
 def calculate_score(row_n, row_h, FIELDS_WEIGHTS, index_last_categorical):
 	score = 0
+	weight = 1.0 / len(FIELDS_WEIGHTS)	# unweighted
 
 	for field_weight in FIELDS_WEIGHTS[ : (index_last_categorical + 1)]:
 		field_n = field_weight.field_n
 		field_h = field_weight.field_b
-		weight = field_weight.weight
+		# weight = field_weight.weight 	# weighted
 		if row_n[field_n] == row_h[field_h]:
 			score += weight
 
@@ -39,22 +40,29 @@ if __name__ == "__main__":
 		FieldWeight('RXDCOUNT',	'drugcnt',	.1,		15)
 	]
 	index_last_categorical = 2 	# NEED TO BE CHANGED
-	fields_out = ['NHANES_HPN_SCORE']
+	# fields_out = ['NHANES_HPN_SCORE']	# Write score into output
+	fields_out = []
 	start_time = time.clock()
 
 	# Read NHANES data into memory
 	rows_n = []
+	rows_n_chf = []
+	rows_n_no_chf = []
 	deleted_n = []
 	with open(sys.argv[2], 'rb') as in_n:
 		reader_n = csv.DictReader(in_n)
 		fields_out.extend(reader_n.fieldnames)
 		for row in reader_n:
-			rows_n.append(row)
+			# rows_n.append(row)
+			if row['MCQ160B'] == '1':
+				rows_n_chf.append(row)
+			else:
+				rows_n_no_chf.append(row)
 			deleted_n.append(False)
 
 	# Find match for each row in HPN
 	with open(sys.argv[3], 'rb') as in_h:
-		with open(util.make_dir_path(sys.argv[1]) + 'nhanes_hpn_match.csv', 'wb') as out:
+		with open(util.make_dir_path(sys.argv[1]) + 'nhanes_brfss_hpn_merged.csv', 'wb') as out:
 			reader_h = csv.DictReader(in_h)
 			fields_out.extend(field_weight.diff_fields(reader_h.fieldnames, FIELDS_WEIGHTS))
 			fields_out.remove('PatientID')
@@ -64,13 +72,20 @@ if __name__ == "__main__":
 			for row_h in reader_h:
 				highest_score = 0
 				highest_score_row_n = {}
-				index_to_delete_n = len(rows_n)
+				has_chf = row_h['Congestive Heart Faliure Unspecified']
+				# index_to_delete_n = len(rows_n)
+				num_rows_n = len(rows_n_chf) if has_chf == '1' else len(rows_n_no_chf)
+				index_to_delete_n = num_rows_n
 
 				for i in range(10):
-					index = len(rows_n)
-					while index == len(rows_n) or deleted_n[index] == True:
-						index = random.randint(0, len(rows_n) - 1)
-					row_n = rows_n[index]
+					# index = len(rows_n)
+					index = num_rows_n
+					# while index == len(rows_n) or deleted_n[index] == True:
+					while index == num_rows_n or deleted_n[index] == True:
+						# index = random.randint(0, len(rows_n) - 1)
+						index = random.randint(0, num_rows_n - 1)
+					# row_n = rows_n[index]
+					row_n = rows_n_chf[index] if has_chf == '1' else rows_n_no_chf[index]
 					score = calculate_score(row_n, row_h, FIELDS_WEIGHTS, index_last_categorical)
 					if score > highest_score:
 						highest_score = score
@@ -82,7 +97,7 @@ if __name__ == "__main__":
 					for key, value in row_h.iteritems():
 						if key in fields_out:
 							row_out[key] = value
-					row_out['NHANES_HPN_SCORE'] = highest_score
+					# row_out['NHANES_HPN_SCORE'] = highest_score 	# Write score into output
 					writer.writerow(row_out)
 				else:
 					print 'No match found'
